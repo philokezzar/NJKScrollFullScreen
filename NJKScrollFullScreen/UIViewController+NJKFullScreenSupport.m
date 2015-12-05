@@ -45,7 +45,7 @@
 
     CGFloat overwrapStatusBarHeight = statusBarHeight - viewControllerFrame.origin.y;
 
-    CGFloat navigationBarHeight = self.navigationController.navigationBar.frame.size.height;
+    CGFloat navigationBarHeight = [self getNavigationBarHeight];
     CGFloat top = NJK_IS_RUNNING_IOS7 ? -navigationBarHeight + overwrapStatusBarHeight : -navigationBarHeight;
 
     [self setNavigationBarOriginY:top animated:animated];
@@ -69,7 +69,7 @@
     CGFloat overwrapStatusBarHeight = statusBarHeight - viewControllerFrame.origin.y;
 
     CGRect frame = self.navigationController.navigationBar.frame;
-    CGFloat navigationBarHeight = frame.size.height;
+    CGFloat navigationBarHeight = [self getNavigationBarHeight];
 
     CGFloat topLimit = NJK_IS_RUNNING_IOS7 ? -navigationBarHeight + overwrapStatusBarHeight : -navigationBarHeight;
     CGFloat bottomLimit = overwrapStatusBarHeight;
@@ -102,6 +102,14 @@
         return statuBarFrameSize.height;
     }
     return UIInterfaceOrientationIsPortrait(self.interfaceOrientation) ? statuBarFrameSize.height : statuBarFrameSize.width;
+}
+
+- (CGFloat)getNavigationBarHeight {
+    if([NSStringFromClass([self class]) isEqualToString:@"BrowseViewApiController"]){
+        return 64; // hard-coded value. change here for further updates
+    }else{
+        return self.navigationController.navigationBar.frame.size.height;
+    }
 }
 
 #pragma mark -
